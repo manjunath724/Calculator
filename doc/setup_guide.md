@@ -12,3 +12,7 @@ asdf global ruby 3.2.2
 ```
 bundle install
 ```
+* Run specs(test cases)
+```
+bundle exec rspec
+```

@@ -13,6 +13,23 @@ class StringCalculator
 
   private
 
+  def replace_delimiter(numbers)
+    # Extract content between // and \n within a string
+    delimiter = numbers.match(/^\/\/(.*?)\n/) { $1 }
+
+    # If different delimiters are present
+    replace_match(numbers, delimiter) unless delimiter.nil?
+
+    numbers.gsub!('\n', ',')                      # Replace newline character with comma(,) otherwise
+  end
+
+  def replace_match(numbers, delimiter)
+    numbers.gsub!("//#{delimiter}\n", '')         # Remove the first line containing delimiter information from the input string
+    delimiter.gsub!('[','')                       # If delimiters are enclosed in big brackets then remove opening braces
+    delimiters = delimiter.split(']')             # Split the remaining string by closing braces
+    delimiters.map { |d| numbers.gsub!(d, ',') }  # For each matching delimiter, replace the occurrences in input string
+  end
+
   def validate_size(numbers)
     numbers_count = numbers.scan(/\d+/).size
     commas_count = numbers.scan(/,/).size
@@ -22,18 +39,5 @@ class StringCalculator
   def validate_negative(numbers)
     negatives = numbers.scan(/-\d+/)
     raise StandardError.new("negative numbers are not allowed #{negatives.join(', ')}") unless negatives.empty?
-  end
-
-  def replace_delimiter(numbers)
-    delimiter = numbers.match(/^\/\/(.*?)\n/) { $1 }
-
-    unless delimiter.nil?
-      numbers.gsub!("//#{delimiter}\n", '')
-      delimiter.gsub!('[','')
-      delimiters = delimiter.split(']')
-      delimiters.map { |d| numbers.gsub!(d, ',') }
-    end
-
-    numbers.gsub!('\n', ',')
   end
 end
