@@ -10,7 +10,7 @@ RSpec.describe StringCalculator do
 
     context 'with a comma alone' do
       it 'raises invalid input exception' do
-        expect { calculator.add(',') }.to raise_error(StandardError, 'Invalid Input')
+        expect { calculator.add(',') }.to raise_error(StandardError, 'invalid input')
       end
     end
 
@@ -40,7 +40,19 @@ RSpec.describe StringCalculator do
 
     context 'with invalid input' do
       it 'raises invalid input exception' do
-        expect { calculator.add('1,\n') }.to raise_error(StandardError, 'Invalid Input')
+        expect { calculator.add('1,\n') }.to raise_error(StandardError, 'invalid input')
+      end
+    end
+
+    context 'with negative input' do
+      it 'raises negative number exception' do
+        expect { calculator.add('-1') }.to raise_error(StandardError, 'negative numbers are not allowed -1')
+      end
+    end
+
+    context 'with multiple negative input' do
+      it 'raises negative numbers exception' do
+        expect { calculator.add('-1, -2') }.to raise_error(StandardError, 'negative numbers are not allowed -1, -2')
       end
     end
   end
