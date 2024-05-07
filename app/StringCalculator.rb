@@ -7,7 +7,7 @@ class StringCalculator
     validate_negative(numbers)
 
     numbers.split(',').map(&:to_i).inject(0) do |sum, num|
-      sum + num
+      sum + (num <= 1000 ? num : 0)
     end
   end
 
