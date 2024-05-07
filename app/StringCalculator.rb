@@ -20,7 +20,7 @@ class StringCalculator
     # If different delimiters are present
     replace_match(numbers, delimiter) unless delimiter.nil?
 
-    numbers.gsub!('\n', ',')                      # Replace newline character with comma(,) otherwise
+    numbers.gsub!("\n", ',')                      # Replace newline character with comma(,) otherwise
   end
 
   def replace_match(numbers, delimiter)

@@ -34,13 +34,13 @@ RSpec.describe StringCalculator do
 
     context 'with numbers separated by newline and comma' do
       it 'returns the sum of the numbers' do
-        expect(calculator.add('1\n2,3')).to eq(6)
+        expect(calculator.add("1\n2,3")).to eq(6)
       end
     end
 
     context 'with invalid input' do
       it 'raises invalid input exception' do
-        expect { calculator.add('1,\n') }.to raise_error(StandardError, 'invalid input')
+        expect { calculator.add("1,\n") }.to raise_error(StandardError, 'invalid input')
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.describe StringCalculator do
 
     context 'with numbers greater than 1000 should be ignored' do
       it 'returns the sum of the numbers that are lesser or equal to 1000' do
-        expect(calculator.add('1\n2,1003,1000,1002,3')).to eq(1006)
+        expect(calculator.add("1\n2,1003,1000,1002,3")).to eq(1006)
       end
     end
 
@@ -83,6 +83,12 @@ RSpec.describe StringCalculator do
     context 'with multiple delimiters of any length' do
       it 'returns the sum of the numbers' do
         expect(calculator.add("//[**][%%%]\n1**2%%%3")).to eq(6)
+      end
+    end
+
+    context 'with multiple delimiters of any length and newline separators' do
+      it 'returns the sum of the numbers' do
+        expect(calculator.add("//[**][%%%]\n1**2%%%3\n4")).to eq(10)
       end
     end
   end
