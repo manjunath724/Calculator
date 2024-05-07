@@ -1,8 +1,8 @@
 class StringCalculator
   def add(numbers)
     return 0 if numbers.empty?
-    numbers.gsub!('\n', ',')
 
+    replace_delimiter(numbers)
     validate_size(numbers)
     validate_negative(numbers)
 
@@ -22,5 +22,18 @@ class StringCalculator
   def validate_negative(numbers)
     negatives = numbers.scan(/-\d+/)
     raise StandardError.new("negative numbers are not allowed #{negatives.join(', ')}") unless negatives.empty?
+  end
+
+  def replace_delimiter(numbers)
+    delimiter = numbers.match(/^\/\/(.*?)\n/) { $1 }
+
+    unless delimiter.nil?
+      numbers.gsub!("//#{delimiter}\n", '')
+      delimiter.gsub!('[','')
+      delimiters = delimiter.split(']')
+      delimiters.map { |d| numbers.gsub!(d, ',') }
+    end
+
+    numbers.gsub!('\n', ',')
   end
 end
